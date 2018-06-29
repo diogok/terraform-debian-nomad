@@ -38,3 +38,14 @@ variable "changeme" {
   description="Change this var to force re-provisioning of resources"
   default=""
 }
+
+variable "weave" {
+  description="Should we install weave?"
+  default=true
+}
+
+
+variable "datacenter" {
+  description="Datacenter identifier"
+  default="dc1"
+}

@@ -29,13 +29,14 @@ resource "null_resource" "provision" {
     bastion_private_key = "${lookup(var.connection,"bastion_private_key","")}"
   }
 
-/*
   provisioner "remote-exec" {
     inline =[
         "sleep 10" # sometimes ready is not realy ready
-       ,"mkdir -p /etc/ops" # store all config at /etc/ops
+       ,"sudo mkdir -p /etc/ops && sudo chmod 777 /etc/ops " # store all config at /etc/ops
        ,"echo INDEX=${count.index} > /etc/ops/env"
+       ,"echo DC=${var.datacenter} >> /etc/ops/env"
        ,"echo SEED=${local.all[0]} >> /etc/ops/env"
+       ,"echo WEAVE=${var.weave?"yes":"no"} >> /etc/ops/env"
        ,"echo ENCKEY=${var.enc_key} >> /etc/ops/env"
        ,"echo IFACE=${var.network_interface} >> /etc/ops/env"
        ,"echo SELF=${local.all[count.index]} >> /etc/ops/env"
@@ -51,29 +52,20 @@ resource "null_resource" "provision" {
     script = "${path.module}/scripts/10-docker.sh"
   }
 
+/*
   provisioner "remote-exec" {
-    script = "${path.module}/scripts/20-weave.sh"
+    script = "${path.module}/scripts/20-vault.sh"
   }
-*/
 
   provisioner "file" {
-    source="${path.module}/services/weave.service"
-    destination="/etc/systemd/system/weave.service"
+    source="${path.module}/services/vault.service"
+    destination="/etc/ops/vault.service"
   }
 
   provisioner "remote-exec" {
-    script = "${path.module}/scripts/21-weave-service.sh"
+    script = "${path.module}/scripts/21-vault-service.sh"
   }
-
-/*
-
-#  provisioner "remote-exec" {
-#    script = "${path.module}/scripts/21-weave-setup.sh"
-#  }
-
-#  provisioner "remote-exec" {
-#    script = "${path.module}/scripts/22-weave-launch.sh"
-#  }
+*/
 
   provisioner "remote-exec" {
     script = "${path.module}/scripts/30-consul.sh"
@@ -81,16 +73,12 @@ resource "null_resource" "provision" {
 
   provisioner "file" {
     source="${path.module}/services/consul.service"
-    destination="/etc/systemd/system/consul.service"
+    destination="/etc/ops/consul.service"
   }
 
   provisioner "remote-exec" {
     script = "${path.module}/scripts/31-consul-service.sh"
   }
-
-#  provisioner "remote-exec" {
-#    script = "${path.module}/scripts/40-vault.sh"
-#  }
 
   provisioner "remote-exec" {
     script = "${path.module}/scripts/50-nomad.sh"
@@ -98,13 +86,25 @@ resource "null_resource" "provision" {
 
   provisioner "file" {
     source="${path.module}/services/nomad.service"
-    destination="/etc/systemd/system/nomad.service"
+    destination="/etc/ops/nomad.service"
   }
 
   provisioner "remote-exec" {
     script = "${path.module}/scripts/51-nomad-service.sh"
   }
-*/
 
+
+  provisioner "remote-exec" {
+    script = "${path.module}/scripts/60-weave.sh"
+  }
+
+  provisioner "file" {
+    source="${path.module}/services/weave.service"
+    destination="/etc/ops/weave.service"
+  }
+
+  provisioner "remote-exec" {
+    script = "${path.module}/scripts/61-weave-service.sh"
+  }
 }
 

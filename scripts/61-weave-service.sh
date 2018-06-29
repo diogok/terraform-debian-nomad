@@ -4,6 +4,10 @@ set -e # stop on error
 
 . /etc/ops/env
 
+[[ "$WEAVE" == "no" ]] && exit 0
+
+sudo mv /etc/ops/weave.service /etc/systemd/system/weave.service 
+
 weave status && exit 0  # stop if active
 
 cat /etc/systemd/system/weave.service
