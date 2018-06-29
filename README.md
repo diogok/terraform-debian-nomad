@@ -37,6 +37,9 @@ module "provision-nomad" {
 
   network_interface="enp0s2"
   #network_interface="eth0"
+
+  datacenter="us-1"
+  weave=true
 }
 ```
 
