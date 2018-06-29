@@ -5,6 +5,8 @@ set -e # stop at error
 # stop if docker is installed
 command -v docker && exit 0
 
+command -v curl || sudo apt install -y curl
+
 # install docker the generic way
 curl -fsSL get.docker.com -o get-docker.sh
 sudo sh get-docker.sh

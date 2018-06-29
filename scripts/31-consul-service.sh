@@ -16,7 +16,7 @@ if [ "$ROLE" == "manager" ]; then
 fi
 
 if [ "$ROLE" != "manager" ]; then
-  echo CONSUL_ROLE_FLAGS= >> /etc/ops/env
+  echo CONSUL_ROLE_FLAGS=-server >> /etc/ops/env
 fi
 
 cat /etc/systemd/system/consul.service

@@ -6,11 +6,13 @@ command -v nomad &&  exit 0 # stop if nomad is installed
 
 sudo mkdir -p /var/lib/nomad
 
+command -v wget || sudo apt install -y wget
 command -v unzip || sudo apt install -y unzip
 
 version=0.8.4
 arch=$(arch)
 [[ "$arch" == "armv6l" ]] && arch="arm"
+[[ "$arch" == "x86_64" ]] && arch="amd64"
 
 wget https://releases.hashicorp.com/nomad/${version}/nomad_${version}_linux_${arch}.zip
 unzip nomad_${version}_linux_${arch}.zip

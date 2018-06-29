@@ -7,11 +7,13 @@ command -v consul && exit 0 || true
 
 sudo mkdir -p /var/lib/consul
 
+command -v wget || sudo apt install -y wget
 command -v unzip || sudo apt install -y unzip
 
 version=1.2.0
 arch=$(arch)
 [[ "$arch" == "armv6l" ]] && arch="arm"
+[[ "$arch" == "x86_64" ]] && arch="amd64"
 
 wget https://releases.hashicorp.com/consul/${version}/consul_${version}_linux_${arch}.zip
 unzip consul_${version}_linux_${arch}.zip

@@ -2,6 +2,8 @@
 
 set -e # stop on error
 
+sudo apt update
+
 # stop if limit is set
 [[ "$(sudo sysctl fs.file-max)" == "fs.file-max = 65536" ]] && exit 0 
 
