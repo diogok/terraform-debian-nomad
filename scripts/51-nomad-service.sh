@@ -7,7 +7,7 @@ nomad status && exit 0
 . /etc/ops/env # load config
 
 if [ "$ROLE" == "manager" ]; then
-  echo NOMAD_ROLE_FLAGS="-server -bootstrap-expect=1" >> /etc/ops/env
+  echo NOMAD_ROLE_FLAGS=\"-server -bootstrap-expect=1\" >> /etc/ops/env
 fi
 
 if [ "$ROLE" != "manager" ]; then

@@ -12,7 +12,7 @@ echo CONSUL_UI_BETA=true >> /etc/ops/env
 echo '{"connect":{"enabled":true}}' > /etc/ops/consul.json
 
 if [ "$ROLE" == "manager" ]; then
-  echo CONSUL_ROLE_FLAGS="-server -bootstrap-expect=1" >> /etc/ops/env
+  echo CONSUL_ROLE_FLAGS=\"-server -bootstrap-expect=1\" >> /etc/ops/env
 fi
 
 if [ "$ROLE" != "manager" ]; then
