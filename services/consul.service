@@ -7,7 +7,7 @@ After=network-online.target
 [Service]
 KillMode=process
 EnvironmentFile=/etc/ops/env
-ExecStart=/usr/local/bin/consul agent -node ${ROLE}-${INDEX} -datacenter ${DC} -config-file=/etc/ops/consul.json -encrypt ${ENCKEY} -bind '{{ GetInterfaceIP "${IFACE}" }}' -client 0.0.0.0 -retry-join ${SEED} -ui --data-dir /var/lib/consul $CONSUL_ROLE_FLAGS
+ExecStart=/usr/local/bin/consul agent -node ${ROLE}-${INDEX} -datacenter ${DC} -config-file=/etc/ops/consul.json -recursor $NAMESERVER -encrypt ${ENCKEY} -bind '{{ GetInterfaceIP "${IFACE}" }}' -client 0.0.0.0 -retry-join ${SEED} -ui --data-dir /var/lib/consul $CONSUL_ROLE_FLAGS
 LimitNOFILE=65536
 Restart=always
 
