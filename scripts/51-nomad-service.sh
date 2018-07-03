@@ -18,5 +18,6 @@ sudo mv /etc/ops/nomad.service /etc/systemd/system/nomad.service
 cat /etc/systemd/system/nomad.service
 
 sudo systemctl daemon-reload
+sudo systemctl enable nomad
 sudo systemctl start nomad
 

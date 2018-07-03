@@ -15,5 +15,7 @@ sudo systemctl daemon-reload
 
 [[ "$ROLE" != "manager" ]] && sleep 10
 
+sudo systemctl daemon-reload
+sudo systemctl enable weave
 sudo systemctl start weave
 
